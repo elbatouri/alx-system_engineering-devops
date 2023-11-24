@@ -1,7 +1,7 @@
 # A resource declaration
-file { '/tmp/codingschool':
+file { shcool':
   ensure  => file,
-  path    => '/tmp/codingschool',
+  path    => '/tmp/school',
   mode    => '0744',
   owner   => 'www-data',
   group   => 'www-data',
