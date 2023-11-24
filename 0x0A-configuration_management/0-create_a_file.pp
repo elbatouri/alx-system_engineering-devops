@@ -1,5 +1,5 @@
 # A resource declaration
-file { shcool':
+file { 'shcool':
   ensure  => file,
   path    => '/tmp/school',
   mode    => '0744',
