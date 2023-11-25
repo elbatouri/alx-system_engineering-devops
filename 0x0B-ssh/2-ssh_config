@@ -1,5 +1,8 @@
-SendEnv LANG LC_*
+# Configure ssh client to connect server without typing a password.
+Host 100.25.33.123
+    SendEnv LANG LC_*
     HashKnownHosts yes
     GSSAPIAuthentication yes
-    PasswordAuthentication no
+    GSSAPIDelegateCredentials no
     IdentityFile ~/.ssh/school
+    PasswordAuthentication no
