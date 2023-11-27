@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#install nginx wich ll be listening on port 80
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+echo "Hello World!" > /usr/share/nginx/html/index.html
+sed -i 's/^\(listen 80;\)/\1/' /etc/nginx/sites-available/default
+service nginx restart
+exit 0
