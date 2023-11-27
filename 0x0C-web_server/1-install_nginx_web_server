@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 #install nginx wich ll be listening on port 80
 
-sudo apt-get -y update
-sudo apt-get -y install nginx
-echo "Hello World!" > /usr/share/nginx/html/index.html
-sed -i 's/^\(listen 80;\)/\1/' /etc/nginx/sites-available/default
+apt-get update
+apt-get install -y nginx
+
+#create the directory needed
+mkdir /etc/nginx/html
+
+#create a empty index page
+touch /etc/nginx/html/index.html
+
+echo "Hello World!" > /etc/nginx/html/index.html
+#listen port 80.
+printf %s "server {
+    listen		80 default_server;
+    listen		[::]:80 default_server;
+
+    root		/etc/nginx/html;
+    index		index.html index.htm;
+}
+" > /etc/nginx/sites-available/default
+
+#restarting nginx.
+
 service nginx restart
-exit 0
+
