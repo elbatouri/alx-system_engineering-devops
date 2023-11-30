@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+#this scirpt is for installing nginx and listen on port 80.
 # Update package list
 sudo apt-get update
 
