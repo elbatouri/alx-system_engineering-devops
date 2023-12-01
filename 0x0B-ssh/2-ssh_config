@@ -1,5 +1,5 @@
 # Configure ssh client to connect server without typing a password.
-Host 100.25.33.123
+Host *
     SendEnv LANG LC_*
     HashKnownHosts yes
     GSSAPIAuthentication yes
