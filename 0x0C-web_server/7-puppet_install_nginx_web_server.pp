@@ -1,5 +1,26 @@
-# Installs a Nginx server
+# Install NginX
+# With puppet
 
-exec {'install':
-  provider => shell,
-  command  => 'sudo apt-get -y update ; sudo apt-get -y install nginx ; echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html ; sudo sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/elbatouri permanent;/" /etc/nginx/sites-available/default ; sudo service nginx start',
+exec { 'apt-get-update':
+  command => '/usr/bin/apt-get update',
+}
+
+package { 'nginx':
+  ensure  => installed,
+  require => Exec['apt-get-update'],
+}
+
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
+  require => Package['nginx'],
+}
+
+exec {'redirect_me':
+  command  => 'sed -i "46i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+  provider => 'shell'
+}
+
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
+}
