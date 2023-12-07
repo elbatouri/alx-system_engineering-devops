@@ -1,2 +1,25 @@
 #!/usr/bin/env bash
+# This script displays information about subdomains
 
+give_inf() {
+    local domain="$1"
+    local subdomain="$2"
+    local reg_ip=$(dig "$subdomain.$domain" +short)
+
+    if [ -n "$reg_ip" ]; then
+        echo "The subdomain $subdomain is associated with IP: $reg_ip"
+    else
+        echo "No information found for the subdomain $subdomain"
+    fi
+}
+
+if [ "$#" == 1 ]; then
+    give_inf "$1" "www"
+    give_inf "$1" "lb-01"
+    give_inf "$1" "web-01"
+    give_inf "$1" "web-02"
+elif [ "$#" == 2 ]; then
+    give_inf "$1" "$2"
+else
+    echo "Usage: $0 <domain> [subdomain]"
+fi
