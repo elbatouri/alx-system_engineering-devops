@@ -5,7 +5,6 @@
 rm /etc/nginx/sites-enabled/default
 # overwrite the files
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-
 #restart nginx
 service nginx restart
 
