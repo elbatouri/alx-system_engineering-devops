@@ -7,7 +7,7 @@ give_inf() {
     local reg_ip=$(dig "$subdomain.$domain" +short)
 
     if [ -n "$reg_ip" ]; then
-        echo "The subdomain $subdomain is associated with IP: $reg_ip"
+        echo "The subdomain $subdomain is a A record and points to $reg_ip"
     else
         echo "No information found for the subdomain $subdomain"
     fi
