@@ -11,7 +11,7 @@ File name must be: USER_ID.csv
 
 
 import sys
-import request
+import requests
 import sys
 
 if __name__ == "__main__":
