@@ -12,7 +12,7 @@ import json
 import requests
 import sys
 
-if __main__ == "__main__":
+if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/"
     user_id = sys.argv[1]
     user = requests.get(url + "user/{}".format(user_id)).json()
