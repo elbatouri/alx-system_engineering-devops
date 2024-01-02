@@ -14,7 +14,7 @@ import sys
 import request
 import sys
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/"
     user_id = sys.argv[1]
     todos_response = requests.get(f"{url}todos", params={"userId": user_id})
