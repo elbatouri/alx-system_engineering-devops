@@ -19,7 +19,7 @@ if __name__ == "__main__":
     user_id = sys.argv[1]
     todos_response = requests.get(f"{url}todos", params={"userId": user_id})
     todos = todos_response.json()
-    csv_filename = f"{employee_id}.csv"
+    csv_filename = f"{user_id}.csv"
     user = requests.get(url + "users/{}".format(user_id)).json()
     username = user.get("username")
 
