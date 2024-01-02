@@ -20,6 +20,7 @@ if __name__ == "__main__":
     todos_response = requests.get(f"{url}todos", params={"userId": user_id})
     todos = todos_response.json()
     csv_filename = f"{employee_id}.csv"
+    user = requests.get(url + "users/{}".format(user_id)).json()
     username = user.get("username")
 
     with open(csv_filename, "w", newline='') as csvfile:
