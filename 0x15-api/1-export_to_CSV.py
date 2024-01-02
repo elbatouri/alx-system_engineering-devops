@@ -10,7 +10,7 @@ File name must be: USER_ID.csv
 """
 
 
-import sys
+import csv
 import requests
 import sys
 
