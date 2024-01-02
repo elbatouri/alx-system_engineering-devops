@@ -22,7 +22,7 @@ if __name__ == "__main__":
     json_filename = f"{user_id}.json"
 
     # write data to json file
-    with open(json_filename, "w") as json_file:
+    with open(json_filename, "w") as jsonfile:
         json.dump({user_id: [{
             "task": todo.get("title"),
             "completed": todo.get("completed"),
