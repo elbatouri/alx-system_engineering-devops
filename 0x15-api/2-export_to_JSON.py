@@ -19,10 +19,9 @@ if __name__ == "__main__":
     username = user.get("username")
     todos_response = requests.get(f"{url}todos", params={"userId": user_id})
     todos = todos_response.json()
-    json_filename = f"{user_id}".json
 
     # write data to json file
-    with open(json_filename, "w") as jsonfile:
+    with open("{}.json".format(user_id), "w") as jsonfile:
         json.dump({user_id: [{
             "task": todo.get("title"),
             "completed": todo.get("completed"),
