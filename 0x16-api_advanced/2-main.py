@@ -1,4 +1,3 @@
-cat 2-main.py
 #!/usr/bin/python3
 """
 2-main
