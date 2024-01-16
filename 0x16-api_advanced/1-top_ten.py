@@ -5,15 +5,17 @@ for a given subreddit.
 """
 import requests
 
+
 def top_ten(subreddit):
     user_agent = 'elbatouri/1.0'
     client_id = 'WqSQ8WwNC9Y6ixCB1Gx9sA'
     headers = {'User-Agent': user_agent,
                'Authorization': f'Client-ID {client_id}'}
     url = f'https://www.reddit.com/r/{subreddit}/hot.json'
-    
+
     try:
-        response = requests.get(url, headers=headers, allow_redirects=False).json()
+        response = requests.get(url, headers=headers,
+                                allow_redirects=False).json()
 
         if response.get('data') and response.get('data').get('children'):
             children = response['data']['children']
