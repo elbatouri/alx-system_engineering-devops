@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """
-return ueries the Reddit API and
-prints the titles of the first 10 hot posts listed
+Queries the Reddit API and prints the titles of the first 10 hot posts listed
 for a given subreddit.
 """
 import requests
-
 
 def top_ten(subreddit):
     user_agent = 'elbatouri/1.0'
@@ -13,10 +11,16 @@ def top_ten(subreddit):
     headers = {'User-Agent': user_agent,
                'Authorization': f'Client-ID {client_id}'}
     url = f'https://www.reddit.com/r/{subreddit}/hot.json'
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    
+    try:
+        response = requests.get(url, headers=headers, allow_redirects=False).json()
 
-    if response.status_code == 200:
-        for post in response.json()['data']['children']:
-            print(post['data']['title'])
-    else:
+        if response.get('data') and response.get('data').get('children'):
+            children = response['data']['children']
+
+            for i in range(min(10, len(children))):
+                print(children[i]['data']['title'])
+        else:
+            print(None)
+    except Exception as e:
         print(None)
