@@ -4,42 +4,40 @@ and prints a sorted count of given keywords (case-insensitive,
 delimited by spaces. Javascript should count as javascript,
 but java should not)."""
 
-
 import requests
 from collections import Counter
 
-
-def count_words(subreddit, word_list, found_list=None, after=None):
-    if found_list is None:
-        found_list = []
+def count_words(subreddit, word_list, after=None, word_counts=None):
+    if word_counts is None:
+        word_counts = Counter()
 
     user_agent = {'User-agent': 'elbatouri/1.0'}
     client_id = 'WqSQ8WwNC9Y6ixCB1Gx9sA'
-    headers = {'User-Agent': user_agent['User-agent'],
-               'Authorization': f'Client-ID {client_id}'}
+    headers = {'User-Agent': user_agent['User-agent'], 'Authorization': f'Client-ID {client_id}'}
     url = f'http://www.reddit.com/r/{subreddit}/hot.json?after={after}'
 
-    posts = requests.get(url, headers=headers)
+    try:
+        response = requests.get(url, headers=headers, allow_redirects=True)
+        if response.status_code != 200:
+            print(f"Request failed with status code {response.status_code}")
+            return
 
-    if after is None:
-        word_list = [word.lower() for word in word_list]
+        data = response.json().get('data', {})
+        children = data.get('children', [])
 
-    if posts.status_code == 200:
-        posts = posts.json()['data']
-        aft = posts['after']
-        posts = posts['children']
+        for child in children:
+            title = child['data']['title'].lower()
+            for word in word_list:
+                if f' {word} ' in f' {title} ':
+                    word_counts[word] += 1
 
-        for post in posts:
-            title = post['data']['title'].lower()
-            for word in title.split(' '):
-                if word in word_list:
-                    found_list.append(word)
+        after = data.get('after')
 
-        if aft is not None:
-            count_words(subreddit, word_list, found_list, aft)
+        if after is not None:
+            return count_words(subreddit, word_list, after, word_counts)
         else:
-            word_counts = Counter(found_list)
-            for word, count in word_counts.most_common():
-                print(f'{word}: {count}')
-    else:
-        return
+            sorted_counts = sorted(word_counts.items(), key=lambda x: (-x[1], x[0]))
+            for word, count in sorted_counts:
+                print(f'{word.lower()}: {count}')
+    except Exception as e:
+        print(f"An error occurred: {e}")
