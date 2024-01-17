@@ -4,8 +4,9 @@ and prints a sorted count of given keywords (case-insensitive,
 delimited by spaces. Javascript should count as javascript,
 but java should not)."""
 
-import requests
 from collections import Counter
+import requests
+
 
 def count_words(subreddit, word_list, after=None, word_counts=None):
     if word_counts is None:
@@ -13,7 +14,8 @@ def count_words(subreddit, word_list, after=None, word_counts=None):
 
     user_agent = {'User-agent': 'elbatouri/1.0'}
     client_id = 'WqSQ8WwNC9Y6ixCB1Gx9sA'
-    headers = {'User-Agent': user_agent['User-agent'], 'Authorization': f'Client-ID {client_id}'}
+    headers = {'User-Agent': user_agent['User-agent'],
+               'Authorization': f'Client-ID {client_id}'}
     url = f'http://www.reddit.com/r/{subreddit}/hot.json?after={after}'
 
     try:
@@ -36,7 +38,8 @@ def count_words(subreddit, word_list, after=None, word_counts=None):
         if after is not None:
             return count_words(subreddit, word_list, after, word_counts)
         else:
-            sorted_counts = sorted(word_counts.items(), key=lambda x: (-x[1], x[0]))
+            sorted_counts = sorted(word_counts.items(),
+                                   key=lambda x: (-x[1], x[0]))
             for word, count in sorted_counts:
                 print(f'{word.lower()}: {count}')
     except Exception as e:
